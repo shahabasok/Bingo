@@ -1,4 +1,17 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, PixelRatio, Dimensions} from 'react-native';
+
+const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+
+const scale = SCREEN_WIDTH / 320;
+
+export function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 export default StyleSheet.create({
   container: {
@@ -24,36 +37,40 @@ export default StyleSheet.create({
   nameText: {
     fontFamily: 'GROBOLD',
     color: 'white',
+    fontSize: normalize(7),
   },
   numberText: {
     fontFamily: 'GROBOLD',
     color: 'white',
-    fontSize: 10,
+    fontSize: normalize(5),
     padding: 3,
   },
   rankText: {
     fontFamily: 'GROBOLD',
     color: 'white',
+    fontSize: normalize(6),
   },
   bingoName: {
     fontFamily: 'GROBOLD',
     color: 'white',
-    fontSize: 6,
+    fontSize: normalize(3),
   },
   bingoScore: {
     fontFamily: 'GROBOLD',
     color: 'yellow',
-    fontSize: 6,
+    fontSize: normalize(4),
   },
   rank: {
     fontFamily: 'GROBOLD',
     color: 'white',
     textAlign: 'center',
+    fontSize: normalize(6),
   },
   winningPatternsText: {
     fontFamily: 'GROBOLD',
     color: 'white',
     textAlign: 'center',
+    fontSize: normalize(6),
   },
   tableCellColor: {
     flex: 1,
@@ -97,12 +114,29 @@ export default StyleSheet.create({
   },
   betText: {
     fontFamily: 'GROBOLD',
-    fontSize: 14,
+    fontSize: normalize(6),
     color: '#f7e77e',
   },
   cardsText: {
     fontFamily: 'GROBOLD',
-    fontSize: 10,
+    fontSize: normalize(6),
     color: 'white',
+  },
+  ballDrawText: {
+    position: 'absolute',
+    fontSize: normalize(12),
+    fontFamily: 'GROBOLD',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    opacity: 0.8,
+    zIndex: 1,
   },
 });

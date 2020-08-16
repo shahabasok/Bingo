@@ -124,6 +124,25 @@ export default class App extends Component {
     );
   };
 
+  renderWinningPatterns = () => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          overflow: 'hidden',
+          position: 'relative',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}>
+        <Image
+          style={{flex: 1}}
+          source={require('./assets/images/winning-pattern-1.png')}
+          resizeMode="center"
+        />
+      </View>
+    );
+  };
+
   renderRow = () => {
     return (
       <View
@@ -155,6 +174,7 @@ export default class App extends Component {
   render() {
     const data = [1, 2, 3, 4, 5];
     const circles = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    const winningPatterns = [1, 2, 3];
 
     return (
       <ImageBackground
@@ -165,6 +185,20 @@ export default class App extends Component {
           barStyle="dark-content"
           hidden={true}
         />
+        {this.state.isPlayActive && (
+          <View style={styles.overlay}>
+            <TouchableOpacity
+              onPress={() =>
+                this.setState({isPlayActive: !this.state.isPlayActive})
+              }>
+              <Image
+                source={require('./assets/images/win-popup.png')}
+                style={{flex: 1}}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={{flex: 1}}>
           <View style={styles.topContainer}>
             <View
@@ -635,48 +669,9 @@ export default class App extends Component {
               <View style={{flex: 1}}>
                 <Text style={styles.winningPatternsText}>WINNING PATTERNS</Text>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  overflow: 'hidden',
-                  position: 'relative',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Image
-                  style={{flex: 1}}
-                  source={require('./assets/images/winning-pattern-1.png')}
-                  resizeMode="center"
-                />
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  overflow: 'hidden',
-                  position: 'relative',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Image
-                  style={{flex: 1}}
-                  source={require('./assets/images/winning-pattern-1.png')}
-                  resizeMode="center"
-                />
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  overflow: 'hidden',
-                  position: 'relative',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Image
-                  style={{flex: 1}}
-                  source={require('./assets/images/winning-pattern-1.png')}
-                  resizeMode="center"
-                />
-              </View>
+              {winningPatterns.map((datum, index) => {
+                return this.renderWinningPatterns(index);
+              })}
             </View>
           </View>
           <View
@@ -697,14 +692,7 @@ export default class App extends Component {
                 source={require('./assets/images/ball-draw-main.png')}
                 resizeMode="center"
               />
-              <Text
-                style={{
-                  position: 'absolute',
-                  fontSize: 20,
-                  fontFamily: 'GROBOLD',
-                }}>
-                30
-              </Text>
+              <Text style={styles.ballDrawText}>30</Text>
             </View>
             <View style={{flex: 3}}>
               <View
